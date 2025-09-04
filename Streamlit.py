@@ -55,3 +55,4 @@ fig_segment = px.bar(
     title="Segment-wise Sales & Profit"
 )
 st.plotly_chart(fig_segment)
+
