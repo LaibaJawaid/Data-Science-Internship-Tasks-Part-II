@@ -34,7 +34,7 @@ col2.metric("Total Profit", f"${filtered['Profit'].sum():,.0f}")
 
 # Top 5 Customers
 top_customers = (
-    filtered.groupby("Customer Name")['Sales'].sum()
+    filtered.groupby("Customer.Name")['Sales'].sum()   # ✅ Correct column name
     .sort_values(ascending=False).head(5)
 )
 fig_customers = px.bar(
@@ -55,5 +55,3 @@ fig_segment = px.bar(
     title="Segment-wise Sales & Profit"
 )
 st.plotly_chart(fig_segment)
-
-
