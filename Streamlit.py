@@ -26,10 +26,10 @@ if sub_category:
     filtered = filtered[filtered['Sub.Category'].isin(sub_category)]
 
 # Title
-st.title("📊 Global Superstore Business Intelligence Dashboard")
+st.title("📊 Global Superstore Business Intelligence Dashboard \n \n")
 
 # KPIs
-st.markdown("### 🚀 Key Performance Indicators")
+st.markdown("### 🚀 Key Performance Indicators\n \n")
 col1, col2, col3 = st.columns(3)
 col1.metric("💰 Total Sales", f"${filtered['Sales'].sum():,.0f}")
 col2.metric("📈 Total Profit", f"${filtered['Profit'].sum():,.0f}")
@@ -55,6 +55,7 @@ def style_chart(fig, title):
     )
     return fig
 
+print("\n \n")
 # --- Chart 1: Top 5 Customers
 top_customers = (
     filtered.groupby("Customer.Name")['Sales'].sum()
@@ -71,6 +72,7 @@ fig_customers = px.bar(
 fig_customers = style_chart(fig_customers, "🏆 Top 5 Customers by Sales")
 st.plotly_chart(fig_customers, use_container_width=True)
 
+print("\n \n")
 # --- Chart 2: Segment-wise Performance
 fig_segment = px.bar(
     filtered.groupby("Segment")[["Sales", "Profit"]].sum().reset_index(),
@@ -82,6 +84,7 @@ fig_segment = px.bar(
 fig_segment = style_chart(fig_segment, "📦 Segment-wise Sales & Profit")
 st.plotly_chart(fig_segment, use_container_width=True)
 
+print("\n \n")
 # --- Chart 3: Sales & Profit by Region
 region_perf = filtered.groupby("Region")[["Sales", "Profit"]].sum().reset_index()
 fig_region = go.Figure()
@@ -100,6 +103,7 @@ fig_region.add_trace(go.Bar(
 fig_region = style_chart(fig_region, "🌍 Sales & Profit by Region")
 st.plotly_chart(fig_region, use_container_width=True)
 
+print("\n \n")
 # --- Chart 4: Time Series (Sales over Time)
 sales_time = filtered.groupby("Order.Date")["Sales"].sum().reset_index()
 fig_time = px.line(
@@ -113,3 +117,4 @@ fig_time = px.line(
 fig_time.update_traces(marker=dict(size=6))
 fig_time = style_chart(fig_time, "⏳ Sales Trend Over Time")
 st.plotly_chart(fig_time, use_container_width=True)
+
