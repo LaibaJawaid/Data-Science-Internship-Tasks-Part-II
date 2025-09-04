@@ -28,12 +28,32 @@ if sub_category:
 # Title
 st.title("📊 Global Superstore Business Intelligence Dashboard")
 
-# KPIs with better design
+# KPIs
 st.markdown("### 🚀 Key Performance Indicators")
 col1, col2, col3 = st.columns(3)
 col1.metric("💰 Total Sales", f"${filtered['Sales'].sum():,.0f}")
 col2.metric("📈 Total Profit", f"${filtered['Profit'].sum():,.0f}")
 col3.metric("👥 Unique Customers", filtered['Customer.Name'].nunique())
+
+# Function to apply professional style to all charts
+def style_chart(fig, title):
+    fig.update_layout(
+        title=dict(text=title, font=dict(size=18, color="black", family="Arial Black")),
+        xaxis=dict(
+            title=dict(font=dict(size=14, color="black", family="Arial Black")),
+            tickfont=dict(size=12, color="black", family="Arial Black")
+        ),
+        yaxis=dict(
+            title=dict(font=dict(size=14, color="black", family="Arial Black")),
+            tickfont=dict(size=12, color="black", family="Arial Black")
+        ),
+        legend=dict(
+            font=dict(size=12, color="black", family="Arial Black")
+        ),
+        plot_bgcolor="white",
+        paper_bgcolor="white"
+    )
+    return fig
 
 # --- Chart 1: Top 5 Customers
 top_customers = (
@@ -45,16 +65,10 @@ fig_customers = px.bar(
     x=top_customers.values,
     y=top_customers.index,
     orientation='h',
-    title="🏆 Top 5 Customers by Sales",
     color=top_customers.values,
     color_continuous_scale="Blues"
 )
-fig_customers.update_layout(
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    font=dict(size=13),
-    margin=dict(l=80, r=20, t=50, b=50)
-)
+fig_customers = style_chart(fig_customers, "🏆 Top 5 Customers by Sales")
 st.plotly_chart(fig_customers, use_container_width=True)
 
 # --- Chart 2: Segment-wise Performance
@@ -63,20 +77,14 @@ fig_segment = px.bar(
     x="Segment",
     y=["Sales", "Profit"],
     barmode="group",
-    title="📦 Segment-wise Sales & Profit",
     color_discrete_sequence=px.colors.sequential.Viridis
 )
-fig_segment.update_layout(
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    font=dict(size=13),
-)
+fig_segment = style_chart(fig_segment, "📦 Segment-wise Sales & Profit")
 st.plotly_chart(fig_segment, use_container_width=True)
 
-# --- Chart 3: Sales & Profit by Region (NEW)
+# --- Chart 3: Sales & Profit by Region
 region_perf = filtered.groupby("Region")[["Sales", "Profit"]].sum().reset_index()
 fig_region = go.Figure()
-
 fig_region.add_trace(go.Bar(
     x=region_perf["Region"],
     y=region_perf["Sales"],
@@ -89,13 +97,7 @@ fig_region.add_trace(go.Bar(
     name="Profit",
     marker_color="seagreen"
 ))
-fig_region.update_layout(
-    barmode="group",
-    title="🌍 Sales & Profit by Region",
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    font=dict(size=13),
-)
+fig_region = style_chart(fig_region, "🌍 Sales & Profit by Region")
 st.plotly_chart(fig_region, use_container_width=True)
 
 # --- Chart 4: Time Series (Sales over Time)
@@ -104,15 +106,10 @@ fig_time = px.line(
     sales_time,
     x="Order.Date",
     y="Sales",
-    title="⏳ Sales Trend Over Time",
     markers=True,
     line_shape="spline",
     color_discrete_sequence=["#FF5733"]
 )
 fig_time.update_traces(marker=dict(size=6))
-fig_time.update_layout(
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    font=dict(size=13),
-)
+fig_time = style_chart(fig_time, "⏳ Sales Trend Over Time")
 st.plotly_chart(fig_time, use_container_width=True)
