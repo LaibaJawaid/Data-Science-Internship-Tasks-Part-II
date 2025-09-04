@@ -26,14 +26,18 @@ if sub_category:
     filtered = filtered[filtered['Sub.Category'].isin(sub_category)]
 
 # Title
-st.title("📊 Global Superstore Business Intelligence Dashboard \n \n")
+st.title("📊 Global Superstore Business Intelligence Dashboard")
 
 # KPIs
-st.markdown("### 🚀 Key Performance Indicators\n \n")
+st.markdown("### 🚀 Key Performance Indicators")
 col1, col2, col3 = st.columns(3)
 col1.metric("💰 Total Sales", f"${filtered['Sales'].sum():,.0f}")
 col2.metric("📈 Total Profit", f"${filtered['Profit'].sum():,.0f}")
 col3.metric("👥 Unique Customers", filtered['Customer.Name'].nunique())
+
+# --- Add spacing before charts
+st.markdown("---")
+st.markdown("## 📊 Visual Insights")
 
 # Function to apply professional style to all charts
 def style_chart(fig, title):
@@ -55,8 +59,8 @@ def style_chart(fig, title):
     )
     return fig
 
-print("\n \n")
 # --- Chart 1: Top 5 Customers
+st.markdown("### 🏆 Top 5 Customers by Sales")
 top_customers = (
     filtered.groupby("Customer.Name")['Sales'].sum()
     .sort_values(ascending=False).head(5)
@@ -69,11 +73,13 @@ fig_customers = px.bar(
     color=top_customers.values,
     color_continuous_scale="Blues"
 )
-fig_customers = style_chart(fig_customers, "🏆 Top 5 Customers by Sales")
+fig_customers = style_chart(fig_customers, "Top 5 Customers by Sales")
 st.plotly_chart(fig_customers, use_container_width=True)
 
-print("\n \n")
+st.markdown(" ")  # small gap
+
 # --- Chart 2: Segment-wise Performance
+st.markdown("### 📦 Segment-wise Sales & Profit")
 fig_segment = px.bar(
     filtered.groupby("Segment")[["Sales", "Profit"]].sum().reset_index(),
     x="Segment",
@@ -81,11 +87,13 @@ fig_segment = px.bar(
     barmode="group",
     color_discrete_sequence=px.colors.sequential.Viridis
 )
-fig_segment = style_chart(fig_segment, "📦 Segment-wise Sales & Profit")
+fig_segment = style_chart(fig_segment, "Segment-wise Sales & Profit")
 st.plotly_chart(fig_segment, use_container_width=True)
 
-print("\n \n")
+st.markdown(" ")  # small gap
+
 # --- Chart 3: Sales & Profit by Region
+st.markdown("### 🌍 Sales & Profit by Region")
 region_perf = filtered.groupby("Region")[["Sales", "Profit"]].sum().reset_index()
 fig_region = go.Figure()
 fig_region.add_trace(go.Bar(
@@ -100,11 +108,13 @@ fig_region.add_trace(go.Bar(
     name="Profit",
     marker_color="seagreen"
 ))
-fig_region = style_chart(fig_region, "🌍 Sales & Profit by Region")
+fig_region = style_chart(fig_region, "Sales & Profit by Region")
 st.plotly_chart(fig_region, use_container_width=True)
 
-print("\n \n")
-# --- Chart 4: Time Series (Sales over Time)
+st.markdown(" ")  # small gap
+
+# --- Chart 4: Sales Trend Over Time
+st.markdown("### ⏳ Sales Trend Over Time")
 sales_time = filtered.groupby("Order.Date")["Sales"].sum().reset_index()
 fig_time = px.line(
     sales_time,
@@ -115,6 +125,5 @@ fig_time = px.line(
     color_discrete_sequence=["#FF5733"]
 )
 fig_time.update_traces(marker=dict(size=6))
-fig_time = style_chart(fig_time, "⏳ Sales Trend Over Time")
+fig_time = style_chart(fig_time, "Sales Trend Over Time")
 st.plotly_chart(fig_time, use_container_width=True)
-
