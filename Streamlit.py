@@ -5,15 +5,15 @@ import plotly.express as px
 # Load dataset
 df = pd.read_csv("superstore.csv")
 df.columns = df.columns.str.strip()
-df['Order Date'] = pd.to_datetime(df['Order Date'])
-df['Ship Date'] = pd.to_datetime(df['Ship Date'])
+df['Order.Date'] = pd.to_datetime(df['Order.Date'])
+df['Ship.Date'] = pd.to_datetime(df['Ship.Date'])
 df = df.drop_duplicates()
 
 # Sidebar filters
 st.sidebar.header("Filters")
 region = st.sidebar.multiselect("Select Region", df['Region'].unique())
 category = st.sidebar.multiselect("Select Category", df['Category'].unique())
-sub_category = st.sidebar.multiselect("Select Sub-Category", df['Sub-Category'].unique())
+sub_category = st.sidebar.multiselect("Select Sub-Category", df['Sub.Category'].unique())
 
 # Apply filters
 filtered = df.copy()
@@ -22,7 +22,7 @@ if region:
 if category:
     filtered = filtered[filtered['Category'].isin(category)]
 if sub_category:
-    filtered = filtered[filtered['Sub-Category'].isin(sub_category)]
+    filtered = filtered[filtered['Sub.Category'].isin(sub_category)]
 
 # Title
 st.title("📊 Global Superstore Dashboard")
@@ -55,4 +55,5 @@ fig_segment = px.bar(
     title="Segment-wise Sales & Profit"
 )
 st.plotly_chart(fig_segment)
+
 
