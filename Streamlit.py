@@ -38,10 +38,10 @@ col3.metric("👥 Unique Customers", filtered['Customer.Name'].nunique())
 # --- Add spacing before charts
 st.markdown("---")
 st.markdown("## 📊 Visual Insights")
-st.markdown(" ")  # small gap
+st.markdown(" ")  # extra gap
 
 # Function to apply professional style to all charts
-def style_chart(fig, title, x_title, y_title):
+def style_chart(fig, title, x_title=None, y_title=None):
     fig.update_layout(
         title=dict(text=title, font=dict(size=18, color="black", family="Arial Black")),
         xaxis=dict(
@@ -52,11 +52,18 @@ def style_chart(fig, title, x_title, y_title):
             title=dict(text=y_title, font=dict(size=14, color="black", family="Arial Black")),
             tickfont=dict(size=12, color="black", family="Arial Black")
         ),
-        legend=dict(font=dict(size=12, color="black", family="Arial Black")),
+        legend=dict(
+            font=dict(size=12, color="black", family="Arial Black")
+        ),
+        coloraxis_colorbar=dict(
+            title=dict(font=dict(size=12, color="black", family="Arial Black")),
+            tickfont=dict(size=12, color="black", family="Arial Black")
+        ),
         plot_bgcolor="white",
         paper_bgcolor="white"
     )
     return fig
+
 
 # --- Chart 1: Top 5 Customers
 st.markdown("### 🏆 Top 5 Customers by Sales")
@@ -72,10 +79,11 @@ fig_customers = px.bar(
     color=top_customers.values,
     color_continuous_scale="Blues"
 )
-fig_customers = style_chart(fig_customers, "Top 5 Customers by Sales", "Sales", "Customer Name")
+fig_customers = style_chart(fig_customers, "Top 5 Customers by Sales", x_title="Sales", y_title="Customer Name")
 st.plotly_chart(fig_customers, use_container_width=True)
 
 st.markdown(" ")  # gap
+
 
 # --- Chart 2: Segment-wise Performance
 st.markdown("### 📦 Segment-wise Sales & Profit")
@@ -86,10 +94,11 @@ fig_segment = px.bar(
     barmode="group",
     color_discrete_sequence=px.colors.sequential.Viridis
 )
-fig_segment = style_chart(fig_segment, "Segment-wise Sales & Profit", "Segment", "Values")
+fig_segment = style_chart(fig_segment, "Segment-wise Sales & Profit", x_title="Segment", y_title="Value")
 st.plotly_chart(fig_segment, use_container_width=True)
 
 st.markdown(" ")  # gap
+
 
 # --- Chart 3: Sales & Profit by Region
 st.markdown("### 🌍 Sales & Profit by Region")
@@ -107,10 +116,11 @@ fig_region.add_trace(go.Bar(
     name="Profit",
     marker_color="seagreen"
 ))
-fig_region = style_chart(fig_region, "Sales & Profit by Region", "Region", "Values")
+fig_region = style_chart(fig_region, "Sales & Profit by Region", x_title="Region", y_title="Value")
 st.plotly_chart(fig_region, use_container_width=True)
 
 st.markdown(" ")  # gap
+
 
 # --- Chart 4: Sales Trend Over Time
 st.markdown("### ⏳ Sales Trend Over Time")
@@ -124,5 +134,5 @@ fig_time = px.line(
     color_discrete_sequence=["#FF5733"]
 )
 fig_time.update_traces(marker=dict(size=6))
-fig_time = style_chart(fig_time, "Sales Trend Over Time", "Order Date", "Sales")
+fig_time = style_chart(fig_time, "Sales Trend Over Time", x_title="Order_Date", y_title="Sales")
 st.plotly_chart(fig_time, use_container_width=True)
