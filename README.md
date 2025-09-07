@@ -17,7 +17,7 @@ This repository contains tasks completed as part of a Virtual Internship in Data
 - Math
 - Warnings
 
----
+-----
 
 ## Tools Used
 
@@ -28,7 +28,7 @@ This repository contains tasks completed as part of a Virtual Internship in Data
 - GitHub
 - Kaggle for Datasets
 
-  ---
+------
   
 ## Completed Tasks
 
@@ -44,7 +44,7 @@ This repository contains tasks completed as part of a Virtual Internship in Data
 
 - Suggested relevant marketing strategies for each identified segment at the end with Summary insights!
   
----
+-----
 
 ### Task 3: Energy Consumption Time Series Forecasting
 
@@ -61,7 +61,7 @@ This repository contains tasks completed as part of a Virtual Internship in Data
 - Derived insights on **peak demand periods** and potential optimization strategies.
 - Time series forecasting & Temporal data visualization.
   
----
+-----
 
 ### Task 5: Interactive Business Dashboard in Streamlit
 
@@ -99,6 +99,11 @@ Through these internship tasks, I gained valuable hands-on experience in applyin
 
 This internship has strengthened my problem-solving skills, improved my ability to work with diverse datasets, and enhanced my confidence in implementing ML solutions from scratch.
 
+-----
+
+## Part-I of Data Science internship is here (link) : https://github.com/LaibaJawaid/Data-Science-and-Machine-Learning-Internship
+
+-----
 
 ## How to Use
   OR
